@@ -1595,7 +1595,10 @@ name = "palette_generator"
 version = "0.1.0"
 dependencies = [
  "leptos",
+ "serde",
  "three-d",
+ "wasm-bindgen",
+ "web-sys",
 ]
 
 [[package]]

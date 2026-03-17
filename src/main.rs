@@ -1,3 +1,5 @@
+mod palette;
+
 use leptos::prelude::*;
 
 fn main() {
@@ -7,8 +9,14 @@ fn main() {
 #[component]
 fn App() -> impl IntoView {
     view ! {
+
         <main>
-            <p class="text-8xl ">Hello  World!</p>
+            <div class="flex align-middle justify-center">
+                <div>
+                    <p class="text-8xl ">Hello  World!</p>
+                </div>
+                 
+            </div>
         </main>
     }
 }

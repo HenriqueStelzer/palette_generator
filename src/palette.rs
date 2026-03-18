@@ -28,6 +28,33 @@ pub struct Palette {
     pub brand: Tonality,
     pub semantic: Semantic,
 }
+impl Palette {
+    pub fn sync_theme_css(&self) {
+        // Default usage: sync_theme_css(theme.active_palette());
+        let window = window().unwrap();
+        let document = window.document().unwrap();
+        let root = document.document_element().unwrap();
+        let html_element = root.dyn_into::<web_sys::HtmlElement>().unwrap();
+        let style = html_element.style();
+
+        style.set_property("--surface-alt", &self.surface.dark.to_css()).unwrap();
+        style.set_property("--surface-bg", &self.surface.neutral.to_css()).unwrap();
+        style.set_property("--surface-main", &self.surface.light.to_css()).unwrap();
+        style.set_property("--text-muted", &self.text.dark.to_css()).unwrap();
+        style.set_property("--text", &self.text.neutral.to_css()).unwrap();
+        style.set_property("--text-contrast", &self.text.light.to_css()).unwrap();
+        style.set_property("--shadow", &self.neutral.dark.to_css()).unwrap();
+        style.set_property("--neutral", &self.neutral.neutral.to_css()).unwrap();
+        style.set_property("--light", &self.neutral.light.to_css()).unwrap();
+        style.set_property("--accent-1", &self.brand.dark.to_css()).unwrap();
+        style.set_property("--brand", &self.brand.neutral.to_css()).unwrap();
+        style.set_property("--accent-2", &self.brand.light.to_css()).unwrap();
+        style.set_property("--error", &self.semantic.error.to_css()).unwrap();
+        style.set_property("--warning", &self.semantic.warning.to_css()).unwrap();
+        style.set_property("--success", &self.semantic.success.to_css()).unwrap();
+        style.set_property("--info", &self.semantic.info.to_css()).unwrap();
+    }
+}
 
 #[derive(Clone, Debug)]
 pub struct Semantic {
@@ -119,28 +146,3 @@ impl Theme {
     }
 }
 
-pub fn sync_theme_css(palette: &Palette) {
-    // Default usage: sync_theme_css(theme.active_palette());
-    let window = window().unwrap();
-    let document = window.document().unwrap();
-    let root = document.document_element().unwrap();
-    let html_element = root.dyn_into::<web_sys::HtmlElement>().unwrap();
-    let style = html_element.style();
-
-    style.set_property("--surface-alt", &palette.surface.dark.to_css()).unwrap();
-    style.set_property("--surface-bg", &palette.surface.neutral.to_css()).unwrap();
-    style.set_property("--surface-main", &palette.surface.light.to_css()).unwrap();
-    style.set_property("--text-muted", &palette.text.dark.to_css()).unwrap();
-    style.set_property("--text", &palette.text.neutral.to_css()).unwrap();
-    style.set_property("--text-contrast", &palette.text.light.to_css()).unwrap();
-    style.set_property("--shadow", &palette.neutral.dark.to_css()).unwrap();
-    style.set_property("--neutral", &palette.neutral.neutral.to_css()).unwrap();
-    style.set_property("--light", &palette.neutral.light.to_css()).unwrap();
-    style.set_property("--accent-1", &palette.brand.dark.to_css()).unwrap();
-    style.set_property("--brand", &palette.brand.neutral.to_css()).unwrap();
-    style.set_property("--accent-2", &palette.brand.light.to_css()).unwrap();
-    style.set_property("--error", &palette.semantic.error.to_css()).unwrap();
-    style.set_property("--warning", &palette.semantic.warning.to_css()).unwrap();
-    style.set_property("--success", &palette.semantic.success.to_css()).unwrap();
-    style.set_property("--info", &palette.semantic.info.to_css()).unwrap();
-}

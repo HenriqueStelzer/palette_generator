@@ -1,6 +1,9 @@
 mod palette;
+mod background;
 
 use leptos::prelude::*;
+use palette::*;
+use background::*;
 
 fn main() {
     mount_to_body(App);
@@ -8,26 +11,24 @@ fn main() {
 
 #[component]
 fn App() -> impl IntoView {
-    view ! {
+    
+    let theme: RwSignal<Theme> = RwSignal::new(Theme::new());
 
+    Effect::new(move |_| {
+        theme.with(|t| {
+            t.active_palette().sync_theme_css()
+        });
+    });
+
+    Effect::new(move |_| {
+        if let Err(e) = init_background() {
+            web_sys::console::log_1(&format!("Erro: {:?}", e).into());
+        }
+    });
+
+    view! {
         <main>
-            <div class="flex flex-col align-middle pt-12">
-                <div class="text-center">
-                    <p class="text-6xl font-mono">Color Palette Generator</p>
-                </div>
-
-                <div class="flex justify-between mx-16 my-16">
-                    <div class="bg-amber-400 py-64 px-96 rounded-2xl overflow-hidden -mx-42">
-                        <p>Teste 1</p>
-                    </div>
-                    <div class="bg-amber-400 py-64 px-96 rounded-2xl overflow-hidden -mx-42">
-                        <p>Teste 2</p>
-                    </div>
-                    <div class="bg-amber-400 py-64 px-96 rounded-2xl overflow-hidden -mx-42">
-                        <p>Teste 3</p>
-                    </div>
-                </div>
-            </div>
+            <canvas id="canvas" class="absolute bg-center"></canvas>
         </main>
     }
 }

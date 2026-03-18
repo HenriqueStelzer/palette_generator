@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+@theme {
+  /* Surfaces */
+  --color-surface-alt: var(--surface-alt);
+  --color-surface-bg: var(--surface-bg);
+  --color-surface-main: var(--surface-main);
+
+  /* Text */
+  --color-text-muted: var(--text-muted);
+  --color-text-default: var(--text);
+  --color-text-contrast: var(--text-contrast);
+
+  /* Neutral */
+  --color-neutral: var(--neutral);
+  --color-shadow: var(--shadow);
+  --color-light: var(--light);
+
+  /* Brand */
+  --color-brand: var(--brand);
+  --color-accent-1: var(--accent-1);
+  --color-accent-2: var(--accent-2);
+
+  /* Semantics */
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+}

@@ -5,7 +5,6 @@ edition = "2024"
 
 [dependencies]
 leptos =  { version = "0.8.17", features = ["csr"] } 
-serde = "1.0.228"
-three-d = "0.18.2"
+three-d = { version = "0.18.2", features = ["wasm-bindgen", "web-sys", "window", "image"] }
 wasm-bindgen = "0.2.114"
 web-sys = "0.3.91"

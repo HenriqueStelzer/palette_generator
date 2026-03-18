@@ -15,9 +15,9 @@ impl ColorOklch {
 
 #[derive(Clone, Debug)]
 pub struct Tonality {
-    pub dark: ColorOklch,
-    pub neutral: ColorOklch,
-    pub light: ColorOklch,
+    pub muted: ColorOklch,
+    pub base: ColorOklch,
+    pub prominent: ColorOklch,
 }
 
 #[derive(Clone, Debug)]
@@ -30,29 +30,30 @@ pub struct Palette {
 }
 impl Palette {
     pub fn sync_theme_css(&self) {
-        // Default usage: sync_theme_css(theme.active_palette());
-        let window = window().unwrap();
-        let document = window.document().unwrap();
-        let root = document.document_element().unwrap();
-        let html_element = root.dyn_into::<web_sys::HtmlElement>().unwrap();
-        let style = html_element.style();
+        // Default usage: theme.active_palette().sync_theme_css();
+        if let Some(window) = window() {
+            let document = window.document().unwrap();
+            let root = document.document_element().unwrap();
+            let html_element = root.dyn_into::<web_sys::HtmlElement>().unwrap();
+            let style = html_element.style();
 
-        style.set_property("--surface-alt", &self.surface.dark.to_css()).unwrap();
-        style.set_property("--surface-bg", &self.surface.neutral.to_css()).unwrap();
-        style.set_property("--surface-main", &self.surface.light.to_css()).unwrap();
-        style.set_property("--text-muted", &self.text.dark.to_css()).unwrap();
-        style.set_property("--text", &self.text.neutral.to_css()).unwrap();
-        style.set_property("--text-contrast", &self.text.light.to_css()).unwrap();
-        style.set_property("--shadow", &self.neutral.dark.to_css()).unwrap();
-        style.set_property("--neutral", &self.neutral.neutral.to_css()).unwrap();
-        style.set_property("--light", &self.neutral.light.to_css()).unwrap();
-        style.set_property("--accent-1", &self.brand.dark.to_css()).unwrap();
-        style.set_property("--brand", &self.brand.neutral.to_css()).unwrap();
-        style.set_property("--accent-2", &self.brand.light.to_css()).unwrap();
-        style.set_property("--error", &self.semantic.error.to_css()).unwrap();
-        style.set_property("--warning", &self.semantic.warning.to_css()).unwrap();
-        style.set_property("--success", &self.semantic.success.to_css()).unwrap();
-        style.set_property("--info", &self.semantic.info.to_css()).unwrap();
+            style.set_property("--surface-alt", &self.surface.muted.to_css()).unwrap();
+            style.set_property("--surface-bg", &self.surface.base.to_css()).unwrap();
+            style.set_property("--surface-main", &self.surface.prominent.to_css()).unwrap();
+            style.set_property("--text-muted", &self.text.muted.to_css()).unwrap();
+            style.set_property("--text", &self.text.base.to_css()).unwrap();
+            style.set_property("--text-contrast", &self.text.prominent.to_css()).unwrap();
+            style.set_property("--shadow", &self.neutral.muted.to_css()).unwrap();
+            style.set_property("--neutral", &self.neutral.base.to_css()).unwrap();
+            style.set_property("--light", &self.neutral.prominent.to_css()).unwrap();
+            style.set_property("--accent-1", &self.brand.muted.to_css()).unwrap();
+            style.set_property("--brand", &self.brand.base.to_css()).unwrap();
+            style.set_property("--accent-2", &self.brand.prominent.to_css()).unwrap();
+            style.set_property("--error", &self.semantic.error.to_css()).unwrap();
+            style.set_property("--warning", &self.semantic.warning.to_css()).unwrap();
+            style.set_property("--success", &self.semantic.success.to_css()).unwrap();
+            style.set_property("--info", &self.semantic.info.to_css()).unwrap();
+        }
     }
 }
 
@@ -82,24 +83,24 @@ impl Theme {
             mode: Mode::Light,
             light: Palette {
                 surface: Tonality {
-                    dark:    ColorOklch { l: 0.93, c: 0.01, h: 240.0 },
-                    neutral: ColorOklch { l: 0.97, c: 0.01, h: 240.0 },
-                    light:   ColorOklch { l: 1.00, c: 0.00, h:   0.0 },
+                    muted:    ColorOklch { l: 0.93, c: 0.01, h: 240.0 },
+                    base: ColorOklch { l: 0.97, c: 0.01, h: 240.0 },
+                    prominent:   ColorOklch { l: 1.00, c: 0.00, h:   0.0 },
                 },
                 text: Tonality {
-                    dark:    ColorOklch { l: 0.15, c: 0.01, h: 240.0 },
-                    neutral: ColorOklch { l: 0.30, c: 0.01, h: 240.0 },
-                    light:   ColorOklch { l: 0.55, c: 0.01, h: 240.0 },
+                    muted:    ColorOklch { l: 0.15, c: 0.01, h: 240.0 },
+                    base: ColorOklch { l: 0.30, c: 0.01, h: 240.0 },
+                    prominent:   ColorOklch { l: 0.55, c: 0.01, h: 240.0 },
                 },
                 neutral: Tonality {
-                    dark:    ColorOklch { l: 0.20, c: 0.00, h:   0.0 },
-                    neutral: ColorOklch { l: 0.80, c: 0.01, h: 240.0 },
-                    light:   ColorOklch { l: 0.99, c: 0.00, h:   0.0 },
+                    muted:    ColorOklch { l: 0.20, c: 0.00, h:   0.0 },
+                    base: ColorOklch { l: 0.80, c: 0.01, h: 240.0 },
+                    prominent:   ColorOklch { l: 0.99, c: 0.00, h:   0.0 },
                 },
                 brand: Tonality {
-                    dark:    ColorOklch { l: 0.45, c: 0.18, h: 250.0 },
-                    neutral: ColorOklch { l: 0.55, c: 0.22, h: 250.0 },
-                    light:   ColorOklch { l: 0.75, c: 0.15, h: 250.0 },
+                    muted:    ColorOklch { l: 0.45, c: 0.18, h: 250.0 },
+                    base: ColorOklch { l: 0.55, c: 0.22, h: 250.0 },
+                    prominent:   ColorOklch { l: 0.75, c: 0.15, h: 250.0 },
                 },
                 semantic: Semantic {
                     error:   ColorOklch { l: 0.55, c: 0.22, h:  25.0 },
@@ -110,24 +111,24 @@ impl Theme {
             },
             dark: Palette {
                 surface: Tonality {
-                    dark:    ColorOklch { l: 0.18, c: 0.01, h: 240.0 },
-                    neutral: ColorOklch { l: 0.13, c: 0.01, h: 240.0 },
-                    light:   ColorOklch { l: 0.10, c: 0.01, h: 240.0 },
+                    muted:    ColorOklch { l: 0.18, c: 0.01, h: 240.0 },
+                    base: ColorOklch { l: 0.13, c: 0.01, h: 240.0 },
+                    prominent:   ColorOklch { l: 0.10, c: 0.01, h: 240.0 },
                 },
                 text: Tonality {
-                    dark:    ColorOklch { l: 0.98, c: 0.00, h:   0.0 },
-                    neutral: ColorOklch { l: 0.88, c: 0.01, h: 240.0 },
-                    light:   ColorOklch { l: 0.65, c: 0.01, h: 240.0 },
+                    muted:    ColorOklch { l: 0.98, c: 0.00, h:   0.0 },
+                    base: ColorOklch { l: 0.88, c: 0.01, h: 240.0 },
+                    prominent:   ColorOklch { l: 0.65, c: 0.01, h: 240.0 },
                 },
                 neutral: Tonality {
-                    dark:    ColorOklch { l: 0.05, c: 0.00, h:   0.0 },
-                    neutral: ColorOklch { l: 0.30, c: 0.01, h: 240.0 },
-                    light:   ColorOklch { l: 0.22, c: 0.01, h: 240.0 },
+                    muted:    ColorOklch { l: 0.05, c: 0.00, h:   0.0 },
+                    base: ColorOklch { l: 0.30, c: 0.01, h: 240.0 },
+                    prominent:   ColorOklch { l: 0.22, c: 0.01, h: 240.0 },
                 },
                 brand: Tonality {
-                    dark:    ColorOklch { l: 0.55, c: 0.18, h: 250.0 },
-                    neutral: ColorOklch { l: 0.68, c: 0.18, h: 250.0 },
-                    light:   ColorOklch { l: 0.80, c: 0.14, h: 250.0 },
+                    muted:    ColorOklch { l: 0.55, c: 0.18, h: 250.0 },
+                    base: ColorOklch { l: 0.68, c: 0.18, h: 250.0 },
+                    prominent:   ColorOklch { l: 0.80, c: 0.14, h: 250.0 },
                 },
                 semantic: Semantic {
                     error:   ColorOklch { l: 0.68, c: 0.18, h:  25.0 },
@@ -143,6 +144,12 @@ impl Theme {
             Mode::Light => &self.light,
             Mode::Dark  => &self.dark,
         }
+    }
+    pub fn toggle_mode(&mut self) {
+        self.mode = match self.mode {
+            Mode::Light => Mode::Dark,
+            Mode::Dark => Mode::Light,
+        };
     }
 }
 

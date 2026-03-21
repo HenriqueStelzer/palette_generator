@@ -4,7 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+colcon = "0.10.1"
+console_error_panic_hook = "0.1.7"
 leptos =  { version = "0.8.17", features = ["csr"] } 
 three-d = { version = "0.18.2", features = ["wasm-bindgen", "web-sys", "window", "image"] }
+three-d-asset = { version = "0.9.2", features=["reqwest", "gltf"] }
 wasm-bindgen = "0.2.114"
-web-sys = "0.3.91"
+wasm-bindgen-futures = "0.4.64"
+web-sys = { version = "0.3.91", features = ["Element", "DomRect"] }

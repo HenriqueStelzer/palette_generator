@@ -5,8 +5,10 @@ use leptos::prelude::*;
 use palette::*;
 use background::*;
 
+
 fn main() {
     mount_to_body(App);
+    console_error_panic_hook::set_once();
 }
 
 #[component]
@@ -21,14 +23,36 @@ fn App() -> impl IntoView {
     });
 
     Effect::new(move |_| {
-        if let Err(e) = init_background() {
-            web_sys::console::log_1(&format!("Erro: {:?}", e).into());
-        }
+        init_background(&theme.get());
     });
 
     view! {
         <main>
-            <canvas id="canvas" class="absolute bg-center"></canvas>
+            <canvas id="three-d-bg" class="fixed w-100 h-100 inset-0 self-center z-10"></canvas>
+
+            <div id="body" class="fixed w-auto h-auto">
+
+                <div id="navbar">
+                    <img type="image/png" sizes="512x512" src="public/android-chrome-512x512.png" />
+                    <h1>Palette</h1>
+                </div>
+
+                <div id="header">
+
+                </div>
+
+                <div id="examples">
+
+                </div>
+
+                <div id="usage">
+                
+                </div>
+
+                <div id="footer">
+
+                </div>
+            </div>
         </main>
     }
 }

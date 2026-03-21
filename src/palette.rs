@@ -2,6 +2,7 @@
 
 use web_sys::window;
 use wasm_bindgen::JsCast;
+use three_d::Srgba;
 
 #[derive(Clone, Debug)]
 pub struct ColorOklch {
@@ -12,6 +13,16 @@ pub struct ColorOklch {
 impl ColorOklch {
     pub fn to_css(&self) -> String {
         format!("oklch({:.2} {} {})", self.l, self.c, self.h)
+    }
+    pub fn to_srgba(&self, a: u8) -> Srgba {
+        let mut pixel = [self.l, self.c, self.h];
+        colcon::convert_space(colcon::Space::OKLCH, colcon::Space::SRGB, &mut pixel);
+        Srgba::new(
+            (pixel[0] * 255.0) as u8,
+            (pixel[1] * 255.0) as u8,
+            (pixel[2] * 255.0) as u8,
+            a,
+        )
     }
 }
 

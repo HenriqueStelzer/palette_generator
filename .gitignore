@@ -1,5 +1,5 @@
-# Rust build output
 /target
 /dist
 /tailwindcss
 cargo.lock
+Trunk.toml

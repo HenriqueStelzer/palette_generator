@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  /* Surfaces */
+  --color-surface-alt: var(--surface-alt);
+  --color-surface-bg: var(--surface-bg);
+  --color-surface-main: var(--surface-main);
+
+  /* Text */
+  --color-text-muted: var(--text-muted);
+  --color-text-default: var(--text);
+  --color-text-contrast: var(--text-contrast);
+
+  /* Neutral */
+  --color-neutral: var(--neutral);
+  --color-shadow: var(--shadow);
+  --color-light: var(--light);
+
+  /* Brand */
+  --color-brand: var(--brand);
+  --color-accent-1: var(--accent-1);
+  --color-accent-2: var(--accent-2);
+
+  /* Semantics */
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+}
+
+@layer components {
+  .navbar-shadow {
+    box-shadow:
+      -3px 3px 12px 0px color-mix(in srgb, var(--color-shadow) 90%, transparent),
+      3px -3px 6px 0px
+        color-mix(in srgb, var(--color-accent-2) 50%, transparent);
+  }
+
+  .container-fluid {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .main-surface {
+    position: relative;
+    margin: 1.5rem;
+    padding-inline: 2rem;
+    background-color: var(--color-surface-main);
+    border: 2px solid var(--color-accent-2);
+    border-radius: 0.75rem;
+    box-shadow: -3px 3px 12px -2px var(--color-shadow);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    opacity: 85%;
+  }
+
+  .section {
+    padding-block: 6rem;
+  }
+
+  .section-header {
+    padding-top: 10rem;
+    padding-bottom: 6rem;
+  }
+
+  .text-hero {
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-weight: 700;
+    font-family: monospace;
+  }
+  .text-heading {
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    font-weight: 600;
+    font-family: monospace;
+  }
+  .text-subheading {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  .text-body {
+    font-size: 1rem;
+    line-height: 1.625;
+    max-width: 65ch;
+  }
+  .text-caption {
+    font-size: 0.875rem;
+  }
+}

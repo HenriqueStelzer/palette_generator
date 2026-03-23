@@ -1,56 +1,85 @@
-mod palette;
 mod background;
+mod palette;
 
+use background::*;
 use leptos::prelude::*;
 use palette::*;
-use background::*;
-
 
 fn main() {
-    mount_to_body(App);
     console_error_panic_hook::set_once();
+    mount_to_body(App);
 }
 
 #[component]
 fn App() -> impl IntoView {
-    
-    let theme: RwSignal<Theme> = RwSignal::new(Theme::new());
+    let theme: RwSignal<Theme> = RwSignal::new(Theme::generate(200.0, 0.75, 0.25, 0.5));
+
+    // theme.update(|t| t.toggle_mode());
 
     Effect::new(move |_| {
-        theme.with(|t| {
-            t.active_palette().sync_theme_css()
-        });
+        theme.with(|t| t.active_palette().sync_theme_css());
     });
 
     Effect::new(move |_| {
-        init_background(&theme.get());
+        init_background(&theme.get_untracked());
     });
 
     view! {
         <main>
-            <canvas id="three-d-bg" class="fixed w-100 h-100 inset-0 self-center z-10"></canvas>
+            <canvas id="Three-d-bg" class="fixed w-full h-full inset-0 z-0"></canvas>
+            <span id="Background" class="fixed inset-0 bg-surface-bg/75 z-10"></span>
 
-            <div id="body" class="fixed w-auto h-auto">
 
-                <div id="navbar">
-                    <img type="image/png" sizes="512x512" src="public/android-chrome-512x512.png" />
-                    <h1>Palette</h1>
+            <div id="Body" class="relative z-20 md:subpixel-antialiased">
+                <div id="Navbar">
+                    <nav class="top-0 w-full z-30">
+                        <div class="main-surface h-24 justify-content-start">
+                        <a href="/" class="text-light bg-accent-1 font-mono text-xl p-2 -m-2 rounded-lg border-2 border-accent-1">Palette</a>
+                        <a href="#Examples" class="text-subheading text-accent-1">Examples</a>
+                        <a href="#Usage" class="text-subheading text-accent-1">Usage</a>
+                        <a href="#About" class="text-subheading text-accent-1">About</a>
+                        </div>
+                    </nav>
                 </div>
 
-                <div id="header">
+                <div id="Header">
+                    <div class="main-surface h-120">
 
+                    </div>
                 </div>
 
-                <div id="examples">
+                <div id="Examples">
+                    <div class="flex gap-1 w-full">
+                        <div class="main-surface h-160 w-1/2">
 
+                        </div>
+                        <div class="w-1/2">
+                            <div class="main-surface h-60">
+
+                            </div>
+                            <div class="main-surface h-94">
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div id="usage">
-                
+                <div id="Usage">
+                    <div class="main-surface h-160">
+
+                    </div>
                 </div>
 
-                <div id="footer">
+                <div id="About">
+                    <div class="main-surface h-80">
 
+                    </div>
+                </div>
+
+                <div id="Footer">
+                    <div class="main-surface h-36">
+
+                    </div>
                 </div>
             </div>
         </main>

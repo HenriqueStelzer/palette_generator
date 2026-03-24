@@ -12,9 +12,9 @@ fn main() {
 
 #[component]
 fn App() -> impl IntoView {
-    let theme: RwSignal<Theme> = RwSignal::new(Theme::generate(200.0, 0.75, 0.25, 0.5));
+    let theme: RwSignal<Theme> = RwSignal::new(Theme::generate(240.0, 0.05, 0.25, 0.5));
 
-    // theme.update(|t| t.toggle_mode());
+    theme.update(|t| t.toggle_mode());
 
     Effect::new(move |_| {
         theme.with(|t| t.active_palette().sync_theme_css());
@@ -34,7 +34,7 @@ fn App() -> impl IntoView {
                 <div id="Navbar">
                     <nav class="top-0 w-full z-30">
                         <div class="main-surface h-24 justify-content-start">
-                        <a href="/" class="text-light bg-accent-1 font-mono text-xl p-2 -m-2 rounded-lg border-2 border-accent-1">Palette</a>
+                        <a href="/" class="text-surface-main bg-accent-1 font-semibold font-mono text-xl p-2 -m-2 rounded-lg border-2 border-accent-1">Palette</a>
                         <a href="#Examples" class="text-subheading text-accent-1">Examples</a>
                         <a href="#Usage" class="text-subheading text-accent-1">Usage</a>
                         <a href="#About" class="text-subheading text-accent-1">About</a>
